@@ -5,16 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import com.DriverPackage.DBConnection;
 import com.ExceptionHandling.ExceptionHandle;
-
 public class CustomerUpdation {
     static Scanner sc = new Scanner(System.in);
-
     public static void updateCustomer() {
-        System.out.println("Enter the Id of customer : ");
-        int customerId = ExceptionHandle.getInput(sc);
+        int customerId = ExceptionHandle.getValidCustId(sc);
         sc.nextLine();
         System.out.println("First Name updation ");
         String newFirstName = ExceptionHandle.getValidFirstName(sc);
@@ -39,10 +35,8 @@ public class CustomerUpdation {
             // Check if employee exists
             checkStatement.setInt(1, customerId);
             ResultSet resultSet = checkStatement.executeQuery();
-
             if (resultSet.next()) {
                 System.out.println("Customer exists.");
-
                 // Update the employee
                 try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
                 	updateStatement.setString(1, newFirstName);

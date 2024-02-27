@@ -9,7 +9,6 @@ import java.util.Scanner;
 import com.DriverPackage.DBConnection;
 import com.ExceptionHandling.ExceptionHandle;
 public class Cancellation {
-
     public static void doCancel() {
         Scanner sc = new Scanner(System.in);
         String email = ExceptionHandle.getValidEmail(sc);
@@ -42,13 +41,10 @@ public class Cancellation {
                 System.out.println("Reservation Date : " + reservationDate);
                 System.out.println("Reservation Status: " + reservationStatus);
                 System.out.println("--------------------------------------");
-                
             }
 
-            System.out.print("Enter Reservation ID to Cancel : ");
-            int reservationId = ExceptionHandle.getInput(sc);
-            System.out.print("Enter Table Number to Cancel : ");
-            int tableId = ExceptionHandle.getInput(sc);
+            int reservationId = ExceptionHandle.getValidRervationID(sc);
+            int tableId = ExceptionHandle.getValidTableId(sc);
             try {
                 final String updateQuery = "UPDATE DATABASE.RESERVATION SET RESERVATIONSTATUS = 'Cancelled' WHERE RESERVATIONID = ?";
                 final String updateTableStatus = "UPDATE DATABASE.TABLES SET AVAILABILITYSTATUS	 = 'Available' WHERE TABLESID = ?";

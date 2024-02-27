@@ -8,12 +8,13 @@ package com.DriverPackage;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
-import com.CustomerManagement.CustomerRegistration;
+
 import com.EmployeeManagement.*;
 import com.ExceptionHandling.ExceptionHandle;
 import com.FeedbackManagement.FeedbackAddition;
 import com.MenuManagement.*;
 import com.OrderManagement.*;
+import com.PersonDetails.CustomerRegistration;
 import com.PersonDetails.Login;
 import com.ProfileManagement.*;
 import com.Reservation.*;
@@ -36,6 +37,21 @@ public class UtilityMethods {
         System.out.println("│       4. Exit             │");
         System.out.println("└───────────────────────────┘");
     }
+    public static void paymentLayout() {
+    	System.out.println("┌──────────────────────────────┐");
+    	System.out.println("│    Available Payments        │");
+    	System.out.println("│  1. Cash                     │");
+    	System.out.println("│  2. Card                     │");
+    	System.out.println("└──────────────────────────────┘");;
+    }
+    public static void searchLayout() {
+    	System.out.println("┌─────────────────────────────────────┐");
+    	System.out.println("│      Menu Search                    │");
+    	System.out.println("│  1. Search By Category              │");
+    	System.out.println("│  2. See By Price                    │");
+    	System.out.println("│  3. Go to Customer Options          │");
+    	System.out.println("└─────────────────────────────────────┘");
+    }
 
     static void adminMenu(Scanner sc, Connection con) throws SQLException {
     	System.out.println("┌───────────────────────────┐");
@@ -54,10 +70,8 @@ public class UtilityMethods {
             	System.out.println("│  6. Log Out                         │");
             	System.out.println("└─────────────────────────────────────┘");
 
-                System.out.print("Enter your choice : ");
-                int adminChoice = ExceptionHandle.getInput(sc);
+                int adminChoice = ExceptionHandle.getValidChoice(sc);
                 sc.nextLine();
-
                 switch (adminChoice) {
                     case 1:
                         employeeManagementMenu(sc, con);
@@ -97,8 +111,7 @@ public class UtilityMethods {
             	System.out.println("│  3. Logout                   │");
             	System.out.println("└──────────────────────────────┘");
 
-                System.out.print("Enter your choice : ");
-                int employeeChoice = ExceptionHandle.getInput(sc);
+                int employeeChoice = ExceptionHandle.getValidChoice(sc);
                 sc.nextLine();
                 switch (employeeChoice) {
                     case 1:
@@ -123,8 +136,7 @@ public class UtilityMethods {
     	System.out.println("│      2. Login             │");
     	System.out.println("└───────────────────────────┘");
 
-        System.out.print("Enter your choice : ");
-        int customerChoice = ExceptionHandle.getInput(sc);
+        int customerChoice = ExceptionHandle.getValidChoice(sc);
         sc.nextLine();
         switch (customerChoice) {
             case 1:
@@ -155,10 +167,8 @@ public class UtilityMethods {
         	System.out.println("│  6. Logout                    │");
         	System.out.println("└───────────────────────────────┘");
 
-            System.out.print("Enter your choice : ");
-            int customerChoice = ExceptionHandle.getInput(sc);
-            sc.nextLine();
-
+            int customerChoice = ExceptionHandle.getValidChoice(sc);
+            sc.nextLine();	
             switch (customerChoice) {
                 case 1:
                     System.out.println("Update Customer Details : ");
@@ -167,11 +177,16 @@ public class UtilityMethods {
                 case 2:
                     Reservation.doReservation();
                     System.out.println("Your feedback shapes our future.");
-                    System.out.println("Want to Share your feedback ?[yes | no] : ");
-                    String choice = sc.nextLine();
-                    if(choice.equalsIgnoreCase("yes")) {
-                    	FeedbackAddition.addFeedback();
-                    } 
+                    System.out.println("Want to Share your feedback ?\n[1.Yes \n2.No] : ");
+                    int choice = ExceptionHandle.getValidChoice(sc);
+                    switch (choice) {
+                        case 1:
+                        	FeedbackAddition.addFeedback();
+                        case 2:
+                        	break;
+                        default:
+                        	System.out.println("Invalid Choice.Please try again.");
+                    }
                     break;
                 case 3:
                     Cancellation.doCancel();
@@ -180,11 +195,10 @@ public class UtilityMethods {
                     MenuView.viewMenuData();
                     break;
                 case 5:
-                    System.out.println("Enter your email:");
-                    String email = sc.nextLine();
+                    String email = ExceptionHandle.getValidEmail(sc);
                     int customerId = CustomerDetails.getCustomerId(con, email);
                     if (customerId != -1) {
-                        System.out.println("Customer ID for " + email + ": " + customerId);
+                        //System.out.println("Customer ID for " + email + ": " + customerId);
                         int tableId = CustomerDetails.getTableId(con, customerId);
                         if (tableId != -1)
                             PlaceOrder.searchMenu(sc, con, customerId, tableId);
@@ -215,8 +229,7 @@ public class UtilityMethods {
         	System.out.println("│  5. Back to Admin Menu            │");
         	System.out.println("└───────────────────────────────────┘");
 
-            System.out.print("Enter your choice : ");
-            int employeeManagementChoice = ExceptionHandle.getInput(sc);
+            int employeeManagementChoice = ExceptionHandle.getValidChoice(sc);
             sc.nextLine();
             switch (employeeManagementChoice) {
                 case 1:
@@ -252,8 +265,7 @@ public class UtilityMethods {
         	System.out.println("│  6. Back to Admin Menu           │");
         	System.out.println("└──────────────────────────────────┘");
 
-            System.out.print("Enter your choice : ");
-            int menuManagementChoice = ExceptionHandle.getInput(sc);
+            int menuManagementChoice = ExceptionHandle.getValidChoice(sc);
             sc.nextLine();
             switch (menuManagementChoice) {
                 case 1:
@@ -290,10 +302,8 @@ public class UtilityMethods {
         	System.out.println("│  5. Go to Previous Menu           │");
         	System.out.println("└───────────────────────────────────┘");
 
-            System.out.print("Enter your choice : ");
-            int tableManagementChoice = ExceptionHandle.getInput(sc);
+            int tableManagementChoice = ExceptionHandle.getValidChoice(sc);
             sc.nextLine();
-
             switch (tableManagementChoice) {
                 case 1:
                     TableAddition.addTable();

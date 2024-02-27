@@ -9,6 +9,7 @@ import com.DriverPackage.DBConnection;
 public class Bill {
     
     public static void generateBill(double amount) {
+    	final String restaurantName = "DELECIOUS BITES";
         // Get the current date for the bill
         Date currentDate = new Date();
         Date billDate = new Date(currentDate.getTime());
@@ -39,11 +40,14 @@ public class Bill {
             preparedStatement.setDouble(4, amount); // Use the retrieved price as total amount
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
-            	System.out.println("\nBill ID : "+maxBillId);
+            	System.out.println("------------------------------------------------");
+            	System.out.println("Restaurant Name : "+restaurantName);
+            	System.out.println("Bill ID : "+maxBillId);
             	System.out.println("Order ID : "+orderId);
             	System.out.println("Bill Date : "+new java.sql.Date(billDate.getTime()));
             	System.out.println("Total Amount : "+amount);
-                System.out.println("Bill generated successfully.");         
+                System.out.println("Bill generated successfully."); 
+                System.out.println("------------------------------------------------");
             } else {
                 System.out.println("Failed to generate the bill.");
             }

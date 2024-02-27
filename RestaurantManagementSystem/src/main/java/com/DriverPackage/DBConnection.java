@@ -20,8 +20,6 @@ public class DBConnection {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             con = DriverManager.getConnection(URL, username, password);
-            String result = con == null ? "Connection not established" : "Connection Established "+con;
-            System.out.println(result);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

@@ -19,15 +19,15 @@ public class EmployeeUpdation {
 
     public static void updateEmployee() {
         System.out.println("Enter the Id of employee : ");
-        int employeeId = ExceptionHandle.getInput(sc);
+        int employeeId = ExceptionHandle.getValidEmpItemID(sc);
         sc.nextLine();
         System.out.println("Contact number updation  ");
         String newPhoneNumber = ExceptionHandle.getValidPhoneNumber(sc);
         System.out.println("Email updation ");
         String newEmail = ExceptionHandle.getValidEmail(sc);
         System.out.println("Salary updation ");
-        double newSalary = ExceptionHandle.getSalary(sc);
-
+        double newSalary = ExceptionHandle.getValidSalary(sc);
+        // invoke updateEmployeeToDatabase method
         updateEmployeeToDatabase(employeeId, newPhoneNumber, newEmail, newSalary);
     }
 

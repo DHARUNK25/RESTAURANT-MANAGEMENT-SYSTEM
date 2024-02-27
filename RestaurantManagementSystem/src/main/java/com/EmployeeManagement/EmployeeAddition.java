@@ -11,13 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.DriverPackage.DBConnection;
 import com.ExceptionHandling.ExceptionHandle;
 import com.PersonDetails.Account;
-
+import com.PersonDetails.Employee;
 public class EmployeeAddition {
 
     public static void register() {
@@ -37,13 +34,12 @@ public class EmployeeAddition {
         String phoneNumber = ExceptionHandle.getValidPhoneNumber(sc);
         // validates the email
         String email = ExceptionHandle.getValidEmail(sc);
-        System.out.println("Enter Salary :");
-        double salary = ExceptionHandle.getSalary(sc);
+        double salary = ExceptionHandle.getValidSalary(sc);
         sc.nextLine();
         System.out.println("Enter hire date (YYYY-MM-DD): ");
         String hireDateString = ExceptionHandle.getValidDate(sc);
         java.sql.Date hireDate = java.sql.Date.valueOf(hireDateString);
-        String role = "Employee";
+        final String role = "Employee";
 
         Employee employee = new Employee(firstName, lastName, userName, password, dateOfBirth, gender, phoneNumber,
                 email, salary, hireDate, role);

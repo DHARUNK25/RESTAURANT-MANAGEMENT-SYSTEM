@@ -9,15 +9,12 @@ import com.DriverPackage.DBConnection;
 import com.ExceptionHandling.ExceptionHandle;
 
 public class TableDeletion {
-
     public static void delete() {
         Scanner sc = new Scanner(System.in);
         TableView.viewTableData();
-        System.out.println("Enter the TABLE ID of the table you want to delete : ");
-        int tableId = ExceptionHandle.getInput(sc);
+        int tableId = ExceptionHandle.getValidTableId(sc);
         deleteTableFromDatabase(tableId);
     }
-
     public static void deleteTableFromDatabase(int tableId) {
         String deleteQuery = "DELETE FROM DATABASE.TABLES WHERE TABLESID =?";
         try (Connection connection = DBConnection.doDBConnection();

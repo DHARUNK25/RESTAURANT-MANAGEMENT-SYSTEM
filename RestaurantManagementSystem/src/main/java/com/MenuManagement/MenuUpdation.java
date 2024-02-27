@@ -13,7 +13,7 @@ public class MenuUpdation {
 
     public static void updateMenu() {
         System.out.println("Enter the ItemId of the menu item: ");
-        int itemId = ExceptionHandle.getInput(sc);
+        int itemId = ExceptionHandle.getValidItemID(sc);
         sc.nextLine();
         System.out.println("Enter new Item Name to update: ");
         String newItemName = sc.nextLine();

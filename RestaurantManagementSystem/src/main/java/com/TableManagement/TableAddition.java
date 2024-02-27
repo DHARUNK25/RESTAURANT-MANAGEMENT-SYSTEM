@@ -21,7 +21,7 @@ public class TableAddition {
         double price = ExceptionHandle.getAmount(sc);
         sc.nextLine();
         System.out.println("Enter Availability Status : ");
-        String status = ExceptionHandle.getValidString(sc));
+        String status = ExceptionHandle.getValidString(sc);
 
         Table table = new Table(tableType, price, status);
         // Call the method to add the table to the database

@@ -20,8 +20,7 @@ public class Driver {
         while (true) {
             UtilityMethods.introLayout();
             UtilityMethods.userLayout();
-            System.out.print("Enter your choice : ");
-            int userChoice = ExceptionHandle.getInput(sc);
+            int userChoice = ExceptionHandle.getValidChoice(sc);
             sc.nextLine();
             switch (userChoice) {
                 case 1:

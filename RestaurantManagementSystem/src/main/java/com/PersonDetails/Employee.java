@@ -1,20 +1,18 @@
-package com.CustomerManagement;
+package com.PersonDetails;
 
 import java.sql.Date;
 
-import com.PersonDetails.Account;
-
-public class Customer extends Account {
+public class Employee extends Account {
 	private String firstName;
 	private String lastName;
 	private Date dateOfBirth;
 	private String gender;
-	private String phoneNumber;
 	private String email;
-	private String city;
+	private String phoneNumber;
+	private double salary;
+	private Date hireDate;
 	
-	
-    public Customer(String firstName, String lastName,String userName,String password, Date dateOfBirth, String gender, String phoneNumber, String email, String city, String role) {
+    public Employee(String firstName, String lastName,String userName,String password, Date dateOfBirth, String gender, String phoneNumber, String email, double salary, Date hireDate,String role) {
         super(userName, password, role);
     	this.firstName = firstName;
         this.lastName = lastName;
@@ -22,7 +20,8 @@ public class Customer extends Account {
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.city = city;
+        this.salary = salary;
+        this.hireDate = hireDate;
     
     }
     public String getFirstName() {
@@ -60,12 +59,19 @@ public class Customer extends Account {
 	}		
 	public void setEmail(String email) {
 		this.email = email;
-	}	
-	public String getCity() {
-		return city;
+	}			
+	public double getSalary() {
+		return salary;
 	}		
-	public void setCity(String city) {
-		this.city = city;
-	}	
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+	public Date getHireDate() {
+		return hireDate;
+	}		
+	public void setHireDate(Date hireDate) {
+		this.hireDate = hireDate;
+	}
    
+
 }

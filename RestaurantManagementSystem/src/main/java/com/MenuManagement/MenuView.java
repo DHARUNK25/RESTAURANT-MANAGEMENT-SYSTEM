@@ -12,7 +12,7 @@ import com.DriverPackage.DBConnection;
 public class MenuView {
     public static List<Object> viewMenuData() {
         List<Object> resultList = new ArrayList<>();
-        String viewQuery = "SELECT * FROM DATABASE.MENU";
+        String viewQuery = "SELECT * FROM DATABASE.MENU ORDER BY ITEMID ";
         try (Connection connection = DBConnection.doDBConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(viewQuery)) {
             ResultSet viewResult = preparedStatement.executeQuery();

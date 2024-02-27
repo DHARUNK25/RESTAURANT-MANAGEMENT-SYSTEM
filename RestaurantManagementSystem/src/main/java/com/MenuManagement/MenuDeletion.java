@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import com.DriverPackage.DBConnection;
 import com.ExceptionHandling.ExceptionHandle;
 
@@ -14,7 +13,7 @@ public class MenuDeletion {
         Scanner sc = new Scanner(System.in);
         MenuView.viewMenuData();
         System.out.println("Enter the ItemId of the Menu item you want to delete : ");
-        int itemId = ExceptionHandle.getInput(sc);
+        int itemId = ExceptionHandle.getValidItemID(sc);
         deleteMenuItemFromDatabase(itemId);
     }
     public static void deleteMenuItemFromDatabase(int itemId) {
