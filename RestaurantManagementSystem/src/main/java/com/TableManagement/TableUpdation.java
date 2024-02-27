@@ -9,12 +9,12 @@ import com.ExceptionHandling.ExceptionHandle;
 public class TableUpdation {
     static Scanner sc = new Scanner(System.in);
     public static void updateTable() {
-        System.out.println("Enter the Table ID of the table to update: ");
-        int tableId = ExceptionHandle.getInput(sc);
+        System.out.println("Table ID Updation ");
+        int tableId = ExceptionHandle.getValidTableId(sc);
         sc.nextLine();
-        System.out.println("Enter new Table type to update: ");
+        System.out.println("Enter new table type to update: ");
         String newTableType = ExceptionHandle.getValidString(sc);
-        System.out.println("Enter new Price to update: ");
+        System.out.println("Enter new table Price to update: ");
         double newPrice = ExceptionHandle.getAmount(sc);
         sc.nextLine(); // consume the newline character
         System.out.println("Enter new table status to update: ");

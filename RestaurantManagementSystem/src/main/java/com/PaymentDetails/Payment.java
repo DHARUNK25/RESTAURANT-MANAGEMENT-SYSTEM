@@ -17,7 +17,7 @@ public class Payment {
         }
     }
     private static boolean cashPayment(double amount) {
-        System.out.println("Cash Payment:");
+        System.out.println("     Cash Payment   ");
         System.out.print("Enter the amount : ");
         double amountReceived = ExceptionHandle.getAmount(scanner);
         if (amountReceived >= amount) {
@@ -27,14 +27,13 @@ public class Payment {
         } else {
             System.out.println("Insufficient amount.");
             return false;
-        }
-        
+        }  
     }
     private static boolean cardPayment(double amount) {
-        System.out.println("Card Payment:");
-        String cardNumber = ExceptionHandle.getValidCardNumber(scanner);
-        System.out.print("Enter expiration date (MM/YYYY): ");
-        String expirationDate = scanner.next();
+        System.out.println("    Card Payment    ");
+        String cardNumber = ExceptionHandle.getValidCardNumber(scanner); 
+        @SuppressWarnings("unused")
+		String expirationDate = ExceptionHandle.getValidExpiryDate(scanner);
         int cvv = ExceptionHandle.getValidCvv(scanner);
         boolean isCardValid = validateCard(cardNumber, cvv);
         if (isCardValid) {

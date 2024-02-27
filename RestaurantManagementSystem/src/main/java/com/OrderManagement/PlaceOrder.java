@@ -17,12 +17,8 @@ public class PlaceOrder {
         public static void searchMenu(Scanner sc, Connection con, int customerId, int tableId) throws SQLException {
         MenuSearch menuSearch = new MenuSearch();
         while (true) {
-            System.out.println("--------Menu Search---------");
-            System.out.println("1. Search By Category");
-            System.out.println("2. See By Price");
-            System.out.println("3. Go to Customer Options");
-            System.out.print("Enter your choice : ");
-            int menuSearchChoice = ExceptionHandle.getInput(sc);
+        	UtilityMethods.searchLayout();
+            int menuSearchChoice = ExceptionHandle.getValidChoice(sc);
             sc.nextLine();
             switch (menuSearchChoice) {
                 case 1:
@@ -46,17 +42,14 @@ public class PlaceOrder {
     	//MenuView.viewMenuData();
         List<Object> orderDetails = new ArrayList<>();
         while (true) {
-            System.out.println("Enter the item ID to order (or enter -1 to finish order):");
-            int orderItemID = ExceptionHandle.getInput(sc);
-
-            if (orderItemID == -1) {
+            int orderItemID = ExceptionHandle.getValidItemID(sc);
+            if (orderItemID == 0) {
                 break;
             }
             // Verify if the selected item is in the menu
             boolean isValidItem = checkValidItemId(con,orderItemID);
             if (isValidItem) {
-                System.out.println("Enter the quantity for item " + orderItemID + " :");
-                int quantity = sc.nextInt();
+                int quantity = ExceptionHandle.getValidQuantity(sc,orderItemID);
                 sc.nextLine();
                 System.out.println("Enter special request for item " + orderItemID +
                         " (or enter 'null' for no special request):");
@@ -69,10 +62,10 @@ public class PlaceOrder {
                 System.out.println("Invalid item ID. Please choose a valid item from the menu.");
             }
         }
-        if (!orderDetails.isEmpty()) {        	        	
+        if (orderDetails.isEmpty()) {        	        	
             System.out.println("No item selected!");
         } else {
-            System.out.println("Order not placed.");
+            System.out.println("Order placed.");
         }
     }
     public static boolean checkValidItemId(Connection con,int orderItemId) {
@@ -128,9 +121,8 @@ public class PlaceOrder {
                 totalItemPrice = quantity * itempriceResult.getDouble("PRICE");
                 Bill.generateBill(totalItemPrice);
              // Payment
-                System.out.println("Available Payments : \n1.Cash\n2.Card");
-                System.out.print("Enter your choice : ");
-                int payType = sc.nextInt();  
+                UtilityMethods.paymentLayout();
+                int payType = ExceptionHandle.getValidChoice(sc);  
                 Payment.makePayment(payType, totalItemPrice);
             }
         } catch (SQLException e) {

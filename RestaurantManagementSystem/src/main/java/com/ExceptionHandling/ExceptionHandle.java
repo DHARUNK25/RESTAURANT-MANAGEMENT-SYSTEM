@@ -34,7 +34,7 @@ public class ExceptionHandle {
             if (isValidString(string)) {
                 return string;
             } else {
-                System.out.println("Invalid input type. Please enter valid input.");
+                System.out.println("Input should be in alphabhetical Characters");
             }
         }
     }
@@ -89,11 +89,11 @@ public class ExceptionHandle {
 	public static String getValidCardNumber(Scanner sc) {
         while (true) {
             System.out.println("Enter Card Number:");
-            String card = sc.nextLine();
+            String card = sc.nextLine().replaceAll("\\s", "");
             if (isValidCard(card)) {
                 return card;
             } else {
-                System.out.println("Invalid Contact Number. Please enter a 10-digit number starting with a digit greater than 5");
+                System.out.println("Invalid Card Number. Please enter a 16-digit card number");
             }
         }
     }
@@ -121,24 +121,75 @@ public class ExceptionHandle {
             }
         }
     }
-	public static int getInput(Scanner sc) {
+	public static int getValidChoice(Scanner sc) {
         while (true) {
         	try {
+        		System.out.println("Enter your Choice : ");
         		int input = sc.nextInt();
         		return input;
         	}catch(Exception e) {
-        		System.out.println("Invalid input type.Please enter Valid input type!");
-        	}
-        	
+        		System.out.println("Choice Should be a number!");
+        	    sc.nextLine();
+        	}	
         }
     }
-	public static double getSalary(Scanner sc) {
+	public static int getValidQuantity(Scanner sc,int orderItemID) {
         while (true) {
         	try {
-        		double input = sc.nextInt();
-        		return input;
+        		System.out.println("Enter the quantity for item " + orderItemID + " :");
+        		int quantity = sc.nextInt();
+        		return quantity;
+        	}catch(Exception e) {
+        		System.out.println("Quantity Should be in numbers!");
+        	    sc.nextLine();
+        	}	
+        }
+    }
+	public static int getValidItemID(Scanner sc) {
+        while (true) {
+        	try {
+        		System.out.println("Enter the item ID to order (or enter 0 to finish order):");
+        		int orderItemId = sc.nextInt();
+        		return orderItemId;
+        	}catch(Exception e) {
+        		System.out.println("Item ID Should be in numbers!");
+        	    sc.nextLine();
+        	}	
+        }
+    }
+	public static int getValidEmpItemID(Scanner sc) {
+        while (true) {
+        	try {
+        		System.out.println("Enter the Id of the Employee you want to delete : ");
+        		int empId = sc.nextInt();
+        		return empId;
+        	}catch(Exception e) {
+        		System.out.println("Employee ID Should be in numbers!");
+        	    sc.nextLine();
+        	}	
+        }
+    }
+	public static int getValidCustId(Scanner sc) {
+        while (true) {
+        	try {
+        		System.out.println("Enter Customer ID : ");
+        		int custID = sc.nextInt();
+        		return custID;
+        	}catch(Exception e) {
+        		System.out.println("Customer ID Should be in numbers!");
+        	    sc.nextLine();
+        	}	
+        }
+    }
+	public static double getValidSalary(Scanner sc) {
+        while (true) {
+        	try {
+        		System.out.println("Enter Salary :");
+        		double salary = sc.nextDouble();
+        		return salary;
         	}catch(Exception e) {
         		System.out.println("Invalid salary.Please enter Valid salary!");
+        		sc.nextLine();
         	}
         	
         }
@@ -146,10 +197,11 @@ public class ExceptionHandle {
 	public static double getAmount(Scanner sc) {
         while (true) {
         	try {
-        		double amount = sc.nextInt();
+        		double amount = sc.nextDouble();
         		return amount;
         	}catch(Exception e) {
         		System.out.println("Invalid amount.Please enter Valid amount!");
+        		sc.nextLine();
         	}
         	
         }
@@ -165,6 +217,17 @@ public class ExceptionHandle {
             }
         }
     }
+	public static String getValidExpiryDate(Scanner sc) {
+        while (true) {
+        	System.out.print("Enter expiration date (MM-YYYY): ");
+            String date = sc.nextLine();
+            if (isValidExpiryDate(date)) {
+                return date;
+            } else {
+                System.out.println("Invalid Expiry date. Please enter valid date!");
+            }
+        }
+    }
 	
 	public static String getValidTime(Scanner sc) {
         while (true) {
@@ -176,8 +239,44 @@ public class ExceptionHandle {
             }
         }
     }
+	public static int getValidRating(Scanner sc) {
+        while (true) {
+        	try {
+        	    System.out.println("Enter Rating (1-5) : ");
+        		int rating = sc.nextInt();
+        		return rating;
+        	}catch(Exception e) {
+        		System.out.println("Rating Should be in numbers!");
+        	    sc.nextLine();
+        	}	
+        }
+    }
+	public static int getValidRervationID(Scanner sc) {
+        while (true) {
+        	try {
+        		System.out.print("Enter Reservation ID to Cancel : ");
+        		int resId = sc.nextInt();
+        		return resId;
+        	}catch(Exception e) {
+        		System.out.println("Reservation ID Should be in numbers!");
+        	    sc.nextLine();
+        	}	
+        }
+    }
+	public static int getValidTableId(Scanner sc) {
+        while (true) {
+        	try {
+        	    System.out.print("Enter Table ID : ");
+        		int tableId = sc.nextInt();
+        		return tableId;
+        	}catch(Exception e) {
+        		System.out.println("Table ID Should be in numbers!");
+        	    sc.nextLine();
+        	}	
+        }
+    }
 	public static boolean isValidString(String string) {
-        return string.matches("[a-z|A-Z]*");
+        return string.matches("[a-zA-Z\\s]*");
     }
 	public static boolean isValidTime(String time) {
 	    String regex = "\\d{2}:\\d{2}";
@@ -185,6 +284,10 @@ public class ExceptionHandle {
 	}
 	public static boolean isValidDate(String date) {
 	    String regex = "\\d{4}-\\d{2}-\\d{2}";
+	    return date.matches(regex);
+	}
+	public static boolean isValidExpiryDate(String date) {
+	    String regex = "\\d{2}-\\d{4}";
 	    return date.matches(regex);
 	}
 
@@ -215,8 +318,8 @@ public class ExceptionHandle {
         return phoneNumber.matches("[6-9]\\d{9}");
     }
 	public static boolean isValidCard(String card) {
-        return card.matches("[0-9]\\d{16}");
-    }
+	    return card.matches("\\d{16}");
+	}
 
 	public static boolean isValidCity(String city) {
         return city.matches("[a-z|A-Z]*");

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.Scanner;
 import com.DriverPackage.DBConnection;
+import com.DriverPackage.UtilityMethods;
 import com.ExceptionHandling.ExceptionHandle;
 import com.OrderManagement.OrderTables;
 import com.PaymentDetails.Bill;
@@ -18,8 +19,7 @@ public class Reservation {
         Connection con = DBConnection.doDBConnection();
         try {
         	showAvailableTable(con);
-        	System.out.println("Enter table number you want to reserve : ");
-        	int tableID = ExceptionHandle.getInput(sc);
+        	int tableID = ExceptionHandle.getValidTableId(sc);
         	sc.nextLine();
         	System.out.println("Enter the date to make a reservation (YYYY-MM-DD): ");
         	String reservDate = ExceptionHandle.getValidDate(sc);
@@ -65,7 +65,6 @@ public class Reservation {
                 if (reservationIdResult.next())
                     maxReservationId = 1 + reservationIdResult.getInt("MAXRESVID");
                 reservationIdResult.close();
-
                 priceStatement.setInt(1, tableID);
                 ResultSet priceResult = priceStatement.executeQuery();
                 double tableprice = 0.0;
@@ -81,22 +80,15 @@ public class Reservation {
                 insertOrderTableStatement.setInt(1, maxOrderId + 1);
                 insertOrderTableStatement.setInt(2, orderTables.getCustomerID());
                 insertOrderTableStatement.setInt(3, orderTables.getTableID());
-                int affectedRows = insertOrderTableStatement.executeUpdate();
-	            if (affectedRows > 0) {	
-	                System.out.println("ordered tables inserted Successfully.");
-	            } else {
-	                System.out.println("Failed to insert ordered tables in orderedTable.");
-	            }
+                insertOrderTableStatement.executeUpdate();
 	            // Bill Generation
 	            Bill.generateBill(tableprice);
 	            // Payment
-                System.out.println("Available Payments : \n1.Cash\n2.Card");
-                System.out.print("Enter your choice : ");
-                int payType = ExceptionHandle.getInput(sc);          
-         
+	            UtilityMethods.paymentLayout();
+                int payType = ExceptionHandle.getValidChoice(sc);          
                 boolean doPay = Payment.makePayment(payType, tableprice);      
                 if (doPay) {
-                    preparedStatement.setInt(1, maxReservationId + 1);
+                    preparedStatement.setInt(1, maxReservationId);
                     preparedStatement.setInt(2, customerId);
                     preparedStatement.setInt(3, tableID);
                     preparedStatement.setString(4, specialRequest);
@@ -117,7 +109,6 @@ public class Reservation {
                 } else {
                     System.out.println("Payment failed. Reservation not made");
                 }
-
             } catch (SQLException e) {
                 System.err.println("Database Error: " + e.getMessage());
                 e.printStackTrace();
@@ -135,7 +126,6 @@ public class Reservation {
     private static void showAvailableTable(Connection connection) {
         // SQL query to select available tables
         String selectQuery = "SELECT TABLESID,TABLETYPE,PRICE FROM DATABASE.TABLES WHERE AVAILABILITYSTATUS = 'Available'";
-
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectQuery)) {
             System.out.println("Available Tables:");

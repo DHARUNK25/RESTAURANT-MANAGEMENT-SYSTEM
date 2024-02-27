@@ -1,4 +1,4 @@
-package com.CustomerManagement;
+package com.PersonDetails;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.DriverPackage.DBConnection;
 import com.ExceptionHandling.ExceptionHandle;
-import com.PersonDetails.Account;
 public class CustomerRegistration {
 
     public static void register() {

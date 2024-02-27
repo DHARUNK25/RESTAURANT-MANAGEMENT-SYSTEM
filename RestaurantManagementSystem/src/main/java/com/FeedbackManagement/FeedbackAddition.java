@@ -16,11 +16,9 @@ public class FeedbackAddition {
         // Get details with validation
         System.out.println("Enter Review : ");
         String review = sc.nextLine();
-        System.out.println("Enter Rating (1-5) : ");
-        int rating = ExceptionHandle.getInput(sc);
+        int rating = ExceptionHandle.getValidRating(sc);
         sc.nextLine();
-        System.out.println("Enter Customer ID : ");
-        int customerId = ExceptionHandle.getInput(sc);
+        int customerId = ExceptionHandle.getValidCustId(sc);
         sc.nextLine();
         Feedback feedback = new Feedback(review, rating, customerId);
         // Call the method to add the feedback to the database
@@ -29,9 +27,7 @@ public class FeedbackAddition {
 
     public static void addFeedbackToDatabase(Feedback feedback) {
         final String feedbackIdQuery = "SELECT MAX(FEEDBACKID) AS MAXFEEDBACKID FROM DATABASE.FEEDBACK";
-
         String insertQuery = "INSERT INTO DATABASE.FEEDBACK(FEEDBACKID, REVIEW, RATING, CUSTOMERID) VALUES (?,?,?,?)";
-
         try (Connection connection = DBConnection.doDBConnection();) {
             // get max feedback id
             PreparedStatement feedbackIdStatement = connection.prepareStatement(feedbackIdQuery);

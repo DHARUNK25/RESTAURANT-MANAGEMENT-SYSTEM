@@ -19,9 +19,7 @@ public class EmployeeDeletion {
 	 public static void delete() {
 	    	Scanner sc = new Scanner(System.in);
 	    	EmployeeView.viewEmployeeData();
-	        System.out.println("Enter the Id of the Employee you want to delete : ");
-            int empId = ExceptionHandle.getInput(sc);
-            
+            int empId = ExceptionHandle.getValidEmpItemID(sc); 
             deleteEmployeeFromDatabase(empId);
 	    }
 	    

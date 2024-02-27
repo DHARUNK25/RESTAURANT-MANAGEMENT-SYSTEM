@@ -33,7 +33,6 @@ public class MenuAddition {
     public static void addMenuToDatabase(Menu menu) {
         final String itemIdQuery = "SELECT MAX(ITEMID) AS MAXITEMID FROM DATABASE.MENU";
         final String adminIdQuery = "SELECT ADMINID FROM DATABASE.ADMIN";
-
         String insertQuery = "INSERT INTO DATABASE.MENU( ITEMID,ITEMNAME,CATEGORY,DESCRIPTION,PRICE,AVAILABILITYSTATUS,ADMINID) VALUES (?,?,?,?,?,?,?)";
 
         try (Connection connection = DBConnection.doDBConnection();) {
